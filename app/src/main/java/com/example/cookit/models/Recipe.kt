@@ -5,9 +5,5 @@ data class Recipe (
     val title: String,
     val image: String,
     val imageType: String,
-
-
-
-    // agregregue status para setear los q son favoritos
     var statusFav : Boolean
 )

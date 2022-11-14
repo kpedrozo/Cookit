@@ -5,42 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txtRecipeTitle"
-        android:layout_width="387dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="140dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/recipeTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/vh_separator"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imgRecipe"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:layout_marginTop="12dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/round_border"
-        app:layout_constraintBottom_toTopOf="@+id/txtRecipeTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6"
-        app:shapeAppearanceOverlay="@style/roundImage"
-        tools:ignore="MissingConstraints,ImageContrastCheck" />
 
     <!--    <ImageView-->
     <!--        android:id="@+id/btnFavouriteRcp"-->
@@ -55,14 +20,29 @@
     <!--        app:layout_constraintVertical_bias="0.108"-->
     <!--        app:srcCompat="@drawable/ic_favorite_border" />-->
 
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgRecipe"
+        android:layout_width="350dp"
+        android:layout_height="150dp"
+        android:layout_margin="5dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/round_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundImage"
+        tools:ignore="MissingConstraints,ImageContrastCheck" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnGuardarFavorito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
+        android:background="@color/red_favourite"
         android:contentDescription="@string/favourite"
         android:src="@drawable/ic_baseline_favorite_border_24"
-        android:background="@color/red_favourite"
         app:backgroundTint="@color/red_favourite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +52,26 @@
         app:layout_constraintVertical_bias="0.424"
         tools:ignore="ImageContrastCheck" />
 
+    <TextView
+        android:id="@+id/txtRecipeTitle"
+        android:layout_width="350dp"
+        android:layout_height="38dp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_marginTop="2dp"
+        android:text="@string/recipeTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgRecipe" />
+
+    <View
+        android:id="@+id/vh_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtRecipeTitle" />
 
     <!--    <Button-->
     <!--        android:id="@+id/favBtn"-->

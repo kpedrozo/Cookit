@@ -7,11 +7,18 @@ import com.example.cookit.models.RecipeDetailModel
 import com.example.cookit.models.RecipeEntity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newSingleThreadContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.CoroutineContext
 
 class APIService {
     companion object {
+
+        private val coroutineContext : CoroutineContext = newSingleThreadContext("room")
+        private val  scope = CoroutineScope(coroutineContext)
 
         val BASE_URL = "https://api.spoonacular.com/"
         val apiKey = "502e29b08c5b48ee9b92ebd598c8ee8b"
@@ -110,6 +117,21 @@ class APIService {
 //                .addOnSuccessListener {
 //                    Log.d(TAG, "getRecipesFavourite: ")
 //                }
+            val recetasRoom = RoomDataBase.getInstance(context).recipeDao().fetchAll(user);
+            if (recetasRoom.size == 0){
+                myDB.document(user).collection("recetas").get()
+                    .addOnSuccessListener { documents ->
+                        for (document in documents) {
+                        val id = document.id
+                        val title = document.data["title"]
+                        val img = document.data["image"]
+                            scope.launch {
+                            RoomDataBase.getInstance(context).recipeDao().insertRecipe(RecipeEntity(
+                                Integer.parseInt(id), user, title as String, img as String, true
+                            ))}
+                    }
+                }
+            }
             return RoomDataBase.getInstance(context).recipeDao().fetchAll(user);
         }
 

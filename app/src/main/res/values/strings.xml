@@ -19,6 +19,14 @@
     <string name="ingredients">Ingredients</string>
     <string name="home">Home</string>
     <string name="back">back</string>
+    <string name="tvTituloApp">Cookit</string>
+    <string name="tvSubtituloApp">Encontrá las mejores recetas</string>
+    <string name="llama_de_fuego">Llama de fuego</string>
+    <string name="username">username</string>
+    <string name="ingredientes">Ingredientes</string>
+    <string name="ingredientQuantity">ingredientQuantity</string>
+    <string name="ingredientIcon">ingredientIcon</string>
+    <string name="ingredientName">ingredientName</string>
 
 
 </resources>

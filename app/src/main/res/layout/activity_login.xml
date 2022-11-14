@@ -29,15 +29,14 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/fondo_app_cookit"
+        android:background="@drawable/fondo_app_cookit_degrade"
         android:contentDescription="@string/background" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/btnGoogleSignIn"
-        android:layout_width="195dp"
-        android:layout_height="74dp"
+        android:layout_width="282dp"
+        android:layout_height="62dp"
         android:padding="10dp"
-        android:textSize="96sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"

@@ -8,5 +8,6 @@
     <color name="yellow_700">#E6CF80</color>
     <color name="black">#FF000000</color>
     <color name="dark_gray">#AAAAAA</color>
+    <color name="ligth_gray">#C1C1C1</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

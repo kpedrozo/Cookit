@@ -20,6 +20,7 @@ import com.example.cookit.ui.RecipeEntityAdapter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -47,9 +48,11 @@ class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         val recycler = findViewById<RecyclerView>(R.id.rvRecipes)
         val adapter = RecipeAdapter(recipes, this)
         setContentView(R.layout.activity_home)
+        supportActionBar?.hide()
         initRecyclerView()
         onClickDetails()
         agregarFavorito()

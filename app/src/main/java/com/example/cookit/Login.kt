@@ -1,8 +1,10 @@
 package com.example.cookit
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -45,11 +47,26 @@ class Login : AppCompatActivity() {
 
 
         btnLogin = findViewById(R.id.btnGoogleSignIn)
+        btnLogin.setSize(SignInButton.SIZE_STANDARD);
+
+        reDesignGoogleButton(btnLogin, "Continuar con Google")
+
         // Click para comenzar el Google SignIn
         btnLogin.setOnClickListener {
             val intent = googleSignInClient.signInIntent
             startActivityForResult(intent, 100)
         }
+    }
+
+    private fun reDesignGoogleButton(btnLogin: SignInButton, btnText: String) {
+            for (i in 0 until btnLogin.childCount) {
+                val v = btnLogin.getChildAt(i)
+                if (v is TextView) {
+                    v.text = btnText
+                    v.typeface = Typeface.create("@font/poppins_regular", Typeface.NORMAL )
+                    return
+                }
+            }
     }
 
     private fun checkUser() {
