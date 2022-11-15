@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cookit.R
 
 class IngredientsViewHolder (itemView: View) : RecyclerView.ViewHolder (itemView){
-    val icon : ImageView = itemView.findViewById(R.id.ingredientIcon)
+    var icon : ImageView = itemView.findViewById(R.id.ingredientIcon)
     val ingredient : TextView = itemView.findViewById(R.id.ingredientName)
     val quantity : TextView = itemView.findViewById(R.id.ingredientQuantity)
     val unit : TextView = itemView.findViewById(R.id.ingredientUnit)

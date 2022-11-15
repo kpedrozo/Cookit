@@ -13,8 +13,6 @@ class IngredientsAdapter (var items: MutableList<Ingredient>,
                           context: Context)
     : RecyclerView.Adapter<IngredientsViewHolder>() {
 
-//    private var items : MutableList<Ingredient> = mutableListOf()
-
     private val context = context
 
 
@@ -27,11 +25,7 @@ class IngredientsAdapter (var items: MutableList<Ingredient>,
 
     override fun onBindViewHolder(holder: IngredientsViewHolder, position: Int) {
 
-        Glide.with(context)
-            .load(items[position].image)
-            .placeholder(R.drawable.ingredient)
-            .centerCrop()
-            .into(holder.icon)
+        holder.icon.setImageResource(R.drawable.ingredient)
 
         holder.ingredient.text = items[position].name
 

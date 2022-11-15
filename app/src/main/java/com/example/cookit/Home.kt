@@ -59,7 +59,7 @@ class Home : AppCompatActivity() {
         onClickDetails()
         agregarFavorito()
         eliminarFavorito()
-        buscarRecetas()
+//        buscarRecetas()
 
         btnFavourite = findViewById(R.id.btnFavourite)
         btnFavourite.setOnClickListener{
@@ -88,7 +88,8 @@ class Home : AppCompatActivity() {
 
     private fun buscarRecetas() {
         searchView = findViewById(R.id.searchView)
-        searchView.setOnQueryTextListener()
+        TODO()
+//        searchView.setOnQueryTextListener()
     }
 
     private fun checkUser() {

@@ -53,8 +53,11 @@ class RecipeDetail : AppCompatActivity() {
         super.onStart()
 
         val title = findViewById<TextView>(R.id.txtTituloReceta)
+        Log.d(TAG, "onStart: ${title}")
         val img = findViewById<ImageView>(R.id.imgRecipe)
+        Log.d(TAG, "onStart: ${img}")
         val quantityItems = findViewById<TextView>(R.id.tvItems)
+        Log.d(TAG, "onStart: ${quantityItems}")
 
         scope.launch{
             ingredientsList = intent.getSerializableExtra("ingredients") as ArrayList<Ingredient>

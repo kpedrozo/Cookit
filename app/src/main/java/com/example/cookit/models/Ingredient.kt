@@ -4,16 +4,14 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.time.temporal.TemporalAmount
 
-data class Ingredient (val image: String, val name : String, val amount: Double, val unit: String) : Parcelable {
+data class Ingredient (val name : String, val amount: Double, val unit: String) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readDouble(),
         parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(image)
         parcel.writeString(name)
         parcel.writeDouble(amount)
         parcel.writeString(unit)
