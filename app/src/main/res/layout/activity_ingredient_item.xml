@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/ingredientBackground"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/custom_searchview_background"
+        android:backgroundTint="#F1F1F1"
+        android:contentDescription="@string/background_ingredient"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ImageContrastCheck"
+        tools:layout_editor_absoluteX="0dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <ImageView
+        android:id="@+id/ingredientIcon"
+        android:layout_width="49dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/ingredientIcon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ImageContrastCheck"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/ingredientName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="@string/ingredientName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/ingredientIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/ingredientQuantity"
+        android:layout_width="20dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="@string/Quantity"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/ingredientUnit"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="@string/unit"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/ingredientQuantity"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
+
+    <View
+        android:id="@+id/vh_separator_ingredient"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="61dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

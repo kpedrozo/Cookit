@@ -27,6 +27,10 @@
     <string name="ingredientQuantity">ingredientQuantity</string>
     <string name="ingredientIcon">ingredientIcon</string>
     <string name="ingredientName">ingredientName</string>
+    <string name="Quantity">quantity</string>
+    <string name="unit">Unit</string>
+    <string name="items"> Items</string>
+    <string name="background_ingredient">background ingredient</string>
 
 
 </resources>

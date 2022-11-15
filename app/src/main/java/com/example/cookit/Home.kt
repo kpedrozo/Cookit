@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -37,6 +38,7 @@ class Home : AppCompatActivity() {
     private lateinit var adapterEntity : RecipeEntityAdapter
     private lateinit var btnFavourite : ImageButton
     private lateinit var tvUser : TextView
+    private lateinit var searchView: SearchView
 
     // firebase auth
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -57,6 +59,7 @@ class Home : AppCompatActivity() {
         onClickDetails()
         agregarFavorito()
         eliminarFavorito()
+        buscarRecetas()
 
         btnFavourite = findViewById(R.id.btnFavourite)
         btnFavourite.setOnClickListener{
@@ -81,6 +84,11 @@ class Home : AppCompatActivity() {
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    private fun buscarRecetas() {
+        searchView = findViewById(R.id.searchView)
+        searchView.setOnQueryTextListener()
     }
 
     private fun checkUser() {
@@ -129,7 +137,7 @@ class Home : AppCompatActivity() {
         intent.putExtra("title", receta.title)
         intent.putExtra("img", receta.image)
         intent.putExtra("ingredients", receta.ingredients)
-        intent.putExtra("instruccions", receta.summary)
+//        intent.putExtra("instruccions", receta.summary)
         startActivity(intent)
     }
 

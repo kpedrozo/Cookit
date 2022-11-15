@@ -3,6 +3,7 @@ package com.example.cookit
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.DrawableCompat
@@ -12,17 +13,30 @@ import com.bumptech.glide.Glide
 import com.example.cookit.models.Ingredient
 import com.example.cookit.models.Ingredients
 import com.example.cookit.ui.IngredientsAdapter
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class RecipeDetail : AppCompatActivity() {
+    private val coroutineContext : CoroutineContext = newSingleThreadContext("detail")
+    private val  scope = CoroutineScope(coroutineContext)
+
+    val TAG = "Detail"
 
     private lateinit var rvIngredients : RecyclerView
     private lateinit var adapter : IngredientsAdapter
 
+    private var ingredientsList = ArrayList<Ingredient>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val adapter = IngredientsAdapter(ingredientsList, this)
+
         setContentView(R.layout.activity_recipe_detail)
         supportActionBar?.hide()
 
+        initRecyclerView()
 
 
         val btnBack = findViewById<ImageButton>(R.id.btnBack)
@@ -34,12 +48,31 @@ class RecipeDetail : AppCompatActivity() {
 
 
 
+
     override fun onStart() {
         super.onStart()
+
         val title = findViewById<TextView>(R.id.txtTituloReceta)
         val img = findViewById<ImageView>(R.id.imgRecipe)
-        var ingredients = intent.extras?.getStringArrayList("ingredients")
-            initRecyclerView()
+        val quantityItems = findViewById<TextView>(R.id.tvItems)
+
+        scope.launch{
+            ingredientsList = intent.getSerializableExtra("ingredients") as ArrayList<Ingredient>
+            quantityItems.text = ingredientsList.size.toString() + " items"
+            Log.d(TAG, "onStart: ${ingredientsList.size}")
+            withContext(Dispatchers.Main) {
+                adapter.update(ingredientsList)
+            }
+        }
+//        val ingredients = findViewById<RecyclerView>(R.id.rvIngredients)
+
+//        var ingredientsList = intent.getSerializableExtra("ingredients") as MutableList<Ingredient>
+
+//        ingredients.layoutManager = LinearLayoutManager(this)
+//        adapter = IngredientsAdapter(ingredientsList, this)
+//        ingredients.adapter = adapter
+
+//        var ingredients = intent.extras?.getStringArrayList("ingredients")
 //        val ingredients = findViewById<ListView>(R.id.txtIngredients)
 //        val instruccions = findViewById<TextView>(R.id.txtInstruccions)
 
@@ -76,7 +109,7 @@ class RecipeDetail : AppCompatActivity() {
     fun initRecyclerView() {
         rvIngredients = findViewById<RecyclerView>(R.id.rvIngredients)
         rvIngredients.layoutManager = LinearLayoutManager(this)
-        adapter = IngredientsAdapter(this)
+        adapter = IngredientsAdapter(ingredientsList, this)
         rvIngredients.adapter = adapter
     }
 

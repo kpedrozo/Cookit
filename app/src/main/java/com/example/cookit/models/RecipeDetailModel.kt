@@ -7,6 +7,6 @@ data class RecipeDetailModel (
     val title : String,
     val image : String,
     @SerializedName("extendedIngredients")
-    val ingredients : ArrayList<Ingredients>,
+    val ingredients : ArrayList<Ingredient>,
     val summary : String
 )
