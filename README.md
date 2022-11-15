@@ -3,7 +3,7 @@ Aplicación mobile desarrollada en Kotlin para la materia Diseño de aplicacione
 Permite ingresar bajo la autenticacion con Google, ver un listado de las recetas disponibles en la API, tocar la imagen de una receta para ver sus ingredientes en detalle, agregar la misma a favoritos.
 Almacenando los favoritos en Firebase y Room para que también estén de forma local en el dispositivo.
 
-Para acceder a los dartos de la API es necesario registrarse en la misma y agregar al Header de metodo GET la ApiKey generada.
+Para acceder a los datos de la API es necesario registrarse en la misma y agregar al Header de metodo GET la ApiKey generada.
 
 ```
     @GET("/recipes/{id}/information/")
