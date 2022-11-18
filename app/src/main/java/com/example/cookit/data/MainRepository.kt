@@ -7,8 +7,12 @@ import com.example.cookit.models.RecipeEntity
 
 class MainRepository {
     companion object {
-        suspend fun getRecipes (context: Context, user: String) : ArrayList<Recipe> {
+        fun getRecipes (context: Context, user: String) : ArrayList<Recipe> {
             return APIService.getRecipes(context, user)
+        }
+
+        fun getRecipesSearch (context: Context, user: String, search: String) : ArrayList<Recipe> {
+            return APIService.getRecipesSearch(context, user, search)
         }
 
         suspend fun getRecipebyID (context: Context, id: Int?) : RecipeDetailModel {

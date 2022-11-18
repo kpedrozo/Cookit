@@ -3,24 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Favourite"
+    >
 
     <TextView
         android:id="@+id/lblTituloFavourite"
-        android:layout_width="258dp"
-        android:layout_height="38dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
         android:layout_marginTop="36dp"
+        android:layout_marginEnd="79dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/titulo_favourite"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
@@ -30,13 +34,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lblTituloFavourite" />
 
+
     <ImageButton
         android:id="@+id/btnHome"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginEnd="21dp"
         android:background="@color/white"
         android:contentDescription="@string/home"
         android:scaleType="fitXY"

@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Home">
 
     <TextView
         android:id="@+id/lblTituloFavourite"
-        android:layout_width="283dp"
-        android:layout_height="72dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="79dp"
@@ -19,12 +20,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
+    <!--    android:layout_width="283dp"-->
+    <!--    android:layout_height="72dp"-->
 
     <TextView
         android:id="@+id/lblSubTituloHome"
-        android:layout_width="130dp"
-        android:layout_height="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
         android:layout_marginTop="12dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/subtitulo_home"
@@ -32,44 +35,61 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchInput"
+
+        />
+    <!--    android:layout_width="130dp"-->
+    <!--    android:layout_height="35dp"-->
+
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="25dp"
         android:layout_height="30dp"
-        android:layout_marginStart="4dp"
         android:layout_marginTop="12dp"
+        android:contentDescription="@string/llama_de_fuego"
         app:layout_constraintLeft_toRightOf="@id/lblSubTituloHome"
-        app:layout_constraintTop_toBottomOf="@id/searchView"
+        app:layout_constraintTop_toBottomOf="@+id/searchInput"
         app:srcCompat="@drawable/fuego"
         tools:ignore="ImageContrastCheck"
-        android:contentDescription="@string/llama_de_fuego" />
+        tools:layout_editor_absoluteY="184dp" />
 
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="351dp"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="16dp"
-        android:queryHint="Buscar recetas"
+
+    <EditText
+        android:id="@+id/searchInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:autofillHints=""
         android:background="@drawable/custom_searchview_background"
+        android:drawableStart="@drawable/search_icon"
+        android:hint="@string/buscar_recetas"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:maxLines="1"
+        android:minHeight="48dp"
+        android:padding="8dp"
+        android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/lblTituloFavourite" />
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="470dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
+        android:layout_marginBottom="10dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lblSubTituloHome" />
+        app:layout_constraintTop_toBottomOf="@+id/lblSubTituloHome"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
         android:id="@+id/btnFavourite"
@@ -87,30 +107,48 @@
         app:srcCompat="@drawable/favourite"
         tools:ignore="ImageContrastCheck" />
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/custom_searchview_background"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/btnLogout"
-        android:textColor="#FAFAFA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/tvUser"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/username"
-        app:layout_constraintBottom_toBottomOf="@+id/searchView"
-        app:layout_constraintBottom_toTopOf="@+id/rvRecipes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/lblSubTituloHome" />
+        android:textColor="@color/dark_gray"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@id/btnLogout"
+        app:layout_constraintTop_toBottomOf="@+id/searchInput"
+        tools:ignore="TextContrastCheck" />
 
+    <ImageButton
+        android:id="@+id/btnLogout"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="30dp"
+        android:background="@color/white"
+        android:contentDescription="@string/back"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchInput"
+        app:srcCompat="@drawable/logout"
+        app:tint="@color/ligth_gray"
+        tools:ignore="ImageContrastCheck,TouchTargetSizeCheck" />
+
+<!--    <Button-->
+<!--        android:id="@+id/btnLogout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/custom_searchview_background"-->
+<!--        android:fontFamily="@font/poppins_regular"-->
+<!--        android:text="@string/btnLogout"-->
+<!--        android:textColor="#FAFAFA"-->
+<!--        android:visibility="visible"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        tools:ignore="TextContrastCheck"-->
+<!--        tools:visibility="visible" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

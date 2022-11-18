@@ -20,8 +20,11 @@ interface RecipesAPI {
     @GET("/recipes/{id}/information/")
     fun getRecipebyID (@Path("id") id : Int,
                        @Header ("x-api-key") apiKey : String)
-            : Call<RecipeDetailModel>
+            : Call<RecipeDetailModel>;
 
-
+    @GET("/recipes/complexSearch")
+    fun getRecipesSearch (@Header("x-api-key") apiKey: String,
+                          @Query("query") query : String) : Call<ResponseAPI>;
+    
 
 }

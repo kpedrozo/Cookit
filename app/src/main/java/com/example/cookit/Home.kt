@@ -2,11 +2,12 @@ package com.example.cookit
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.SearchView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +18,9 @@ import com.example.cookit.models.RecipeDao
 import com.example.cookit.models.RecipeDetailModel
 import com.example.cookit.models.RecipeEntity
 import com.example.cookit.ui.RecipeAdapter
-import com.example.cookit.ui.RecipeEntityAdapter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -29,20 +28,24 @@ import kotlin.coroutines.CoroutineContext
 
 class Home : AppCompatActivity() {
     private val coroutineContext : CoroutineContext = newSingleThreadContext("main")
+    private val recipeQueryContext : CoroutineContext = newSingleThreadContext("query")
     private val  scope = CoroutineScope(coroutineContext)
+    private val  scopeQuery = CoroutineScope(recipeQueryContext)
 
     private lateinit var rvRecipes : RecyclerView
     private var recipes = ArrayList<Recipe>()
-    private var recetaDetail : RecipeDetailModel? = null
+//    private var recetaDetail : RecipeDetailModel? = null
     private lateinit var adapter : RecipeAdapter
-    private lateinit var adapterEntity : RecipeEntityAdapter
+//    private lateinit var adapterEntity : RecipeEntityAdapter
     private lateinit var btnFavourite : ImageButton
     private lateinit var tvUser : TextView
-    private lateinit var searchView: SearchView
+//    private lateinit var searchView: SearchView
+    private lateinit var searchInput: EditText
 
     // firebase auth
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private lateinit var btnLogout : Button
+//    private lateinit var btnLogout : Button
+    private lateinit var btnLogout : ImageButton
 
     // google logout
     lateinit var mGoogleSignInClient : GoogleSignInClient
@@ -51,8 +54,8 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        val recycler = findViewById<RecyclerView>(R.id.rvRecipes)
-        val adapter = RecipeAdapter(recipes, this)
+//        val recycler = findViewById<RecyclerView>(R.id.rvRecipes)
+//        val adapter = RecipeAdapter(recipes, this)
         setContentView(R.layout.activity_home)
         supportActionBar?.hide()
         initRecyclerView()
@@ -60,6 +63,8 @@ class Home : AppCompatActivity() {
         agregarFavorito()
         eliminarFavorito()
 //        buscarRecetas()
+
+        searchInput = findViewById(R.id.searchInput)
 
         btnFavourite = findViewById(R.id.btnFavourite)
         btnFavourite.setOnClickListener{
@@ -84,12 +89,9 @@ class Home : AppCompatActivity() {
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-    }
 
-    private fun buscarRecetas() {
-        searchView = findViewById(R.id.searchView)
-        TODO()
-//        searchView.setOnQueryTextListener()
+        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
     }
 
     private fun checkUser() {
@@ -106,14 +108,19 @@ class Home : AppCompatActivity() {
             // get user email
             val email = firebaseUser.email
             // get user
-            val user = firebaseUser.displayName
+            var user = firebaseUser.displayName
+            user = splitName(user!!)
             // set email
-            Log.d("Login", "checkUser: ${user}")
+//            Log.d("Login", "checkUser: ${user}")
             tvUser = findViewById(R.id.tvUser)
             tvUser.text = user;
 //             set name
 
         }
+    }
+
+    private fun splitName(user: String): String {
+        return user.split(Regex(" "))[0]
     }
 
     private fun initRecyclerView() {
@@ -131,7 +138,6 @@ class Home : AppCompatActivity() {
             }
         }
     }
-
 
     private fun showRecipeDetails(receta: RecipeDetailModel) {
         val intent = Intent (this@Home, RecipeDetail::class.java)
@@ -165,19 +171,61 @@ class Home : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        val user = firebaseAuth.currentUser!!.email
+
         scope.launch {
-            val user = firebaseAuth.currentUser!!.email
-            Log.d("Favourite", "onStart email HOME: ${user}")
+//            Log.d("Favourite", "onStart email HOME: ${user}")
             val recipesRoom = RoomDataBase.getInstance(this@Home).recipeDao()
             recipesRoom.fetchAll(user!!)
-            Log.d("Favourite", "onStart: ${recipesRoom}")
-            var recipesMain = MainRepository.getRecipes(this@Home, user)
-            Log.d("getrecetas OK", "llegamooos")
+//            Log.d("Favourite", "onStart: ${recipesRoom}")
+            val recipesMain = MainRepository.getRecipes(this@Home, user)
+//            Log.d("getrecetas OK", "llegamooos")
             recipes = verificarFavoritos(recipesRoom, recipesMain, user)
             withContext(Dispatchers.Main) {
                 adapter.update(recipes)
             }
         }
+
+        searchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//                btnLogout.visibility = View.INVISIBLE
+
+            }
+
+            override fun onTextChanged(search: CharSequence?, start: Int, before: Int, count: Int) {
+//                btnLogout.visibility = View.INVISIBLE
+
+                // uso las recetas que me traigo de la API por primera vez
+                updateRecipesQueryFromRoom(recipes, search)
+
+                // hago una consulta a la API con lo que se busca -> Trae mas cantidad de recetas
+//                val recipesFound = MainRepository.getRecipesSearch(this@Home, user!!, search.toString())
+//                updateRecipesQuery(recipesFound)
+            }
+
+            private fun updateRecipesQueryFromRoom( recipesDB: ArrayList<Recipe>, search: CharSequence?) {
+                val recipesFound = ArrayList<Recipe>();
+                for (recipe in recipesDB) {
+                    if  (recipe.title.uppercase().contains(search.toString().uppercase())) {
+                        recipesFound.add(recipe)
+                    }
+                }
+                updateRecipesQuery(recipesFound);
+            }
+
+            private fun updateRecipesQuery(recipesFound: ArrayList<Recipe>) {
+                scopeQuery.launch {
+                    withContext(Dispatchers.Main) {
+                        adapter.update(recipesFound)
+                    }
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+//                btnLogout.visibility = View.GONE
+
+            }
+        })
     }
 
     private suspend fun verificarFavoritos(recipesRoom: RecipeDao, recipes: ArrayList<Recipe>, user: String): ArrayList<Recipe> {
@@ -191,7 +239,6 @@ class Home : AppCompatActivity() {
         }
         return recipes;
     }
-
 
     private fun cambioPantallaFavoritos() {
         val intent = Intent(this, Favourite::class.java)

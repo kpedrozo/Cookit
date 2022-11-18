@@ -37,6 +37,8 @@
         android:layout_width="282dp"
         android:layout_height="62dp"
         android:padding="10dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.466"

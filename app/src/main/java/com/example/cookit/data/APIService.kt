@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import kotlin.coroutines.CoroutineContext
 
 class APIService {
@@ -29,7 +30,7 @@ class APIService {
 
         private val myDB = Firebase.firestore.collection("favoritos")
 
-        suspend fun getRecipes (context: Context, user: String) : ArrayList<Recipe>{
+        fun getRecipes (context: Context, user: String) : ArrayList<Recipe>{
             Log.d(TAG, "getRecipes: getRecipes email usuario: ${user}")
             val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -37,6 +38,22 @@ class APIService {
 
             val apiEndpoint = retrofit.create(RecipesAPI::class.java)
             val result = apiEndpoint.getRecipes(apiKey, cantRecetas).execute()
+
+            if (result.isSuccessful) {
+                return result.body()!!.results
+            } else {
+                Log.e("Api-Service", "Error al comunicar con la API")
+                return ArrayList<Recipe>()
+            }
+        }
+
+        fun getRecipesSearch (context: Context, user: String, query : String) : ArrayList<Recipe> {
+            val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            val apiEndpoint = retrofit.create(RecipesAPI::class.java)
+            val result = apiEndpoint.getRecipesSearch(apiKey, query).execute()
 
             if (result.isSuccessful) {
                 return result.body()!!.results
@@ -94,9 +111,9 @@ class APIService {
                 myDB.document(user).collection("recetas").get()
                     .addOnSuccessListener { documents ->
                         for (document in documents) {
-                        val id = document.id
-                        val title = document.data["title"]
-                        val img = document.data["image"]
+                            val id = document.id
+                            val title = document.data["title"]
+                            val img = document.data["image"]
                             scope.launch {
                             RoomDataBase.getInstance(context).recipeDao().insertRecipe(RecipeEntity(
                                 Integer.parseInt(id), user, title as String, img as String, true

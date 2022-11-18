@@ -31,6 +31,7 @@
     <string name="unit">Unit</string>
     <string name="items"> Items</string>
     <string name="background_ingredient">background ingredient</string>
+    <string name="buscar_recetas">Buscar recetas</string>
 
 
 </resources>
