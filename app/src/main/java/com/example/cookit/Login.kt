@@ -47,7 +47,6 @@ class Login : AppCompatActivity() {
 
 
         btnLogin = findViewById(R.id.btnGoogleSignIn)
-        btnLogin.setSize(SignInButton.SIZE_STANDARD);
 
         reDesignGoogleButton(btnLogin, "Continuar con Google")
 
@@ -123,7 +122,7 @@ class Login : AppCompatActivity() {
                 } else {
                     // user existente -> Logeado
                     Log.d(TAG, "firebaseAuthWithGoogleAccount: Usuario existente.. \n$email")
-                    Toast.makeText(this@Login, "Cuenta existente...", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@Login, "Hola ${firebaseUser.displayName!!.split(Regex(" "))[0]}!", Toast.LENGTH_SHORT).show()
                 }
                 // pasamos a pantalla Home
                 startActivity(Intent(this@Login, Home::class.java))
