@@ -16,7 +16,8 @@
         android:theme="@style/Theme.Cookit"
         android:usesCleartextTraffic="true"
         tools:targetApi="31"
-        tools:ignore="ExtraText">
+        >
+<!--        tools:ignore="ExtraText"-->
 
         <activity
             android:name=".Splash"

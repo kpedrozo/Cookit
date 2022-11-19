@@ -10,6 +10,7 @@
         android:id="@+id/lblTituloFavourite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minWidth="60dp"
         android:layout_marginStart="21dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="79dp"
@@ -20,14 +21,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <!--    android:layout_width="283dp"-->
-    <!--    android:layout_height="72dp"-->
+
 
     <TextView
         android:id="@+id/lblSubTituloHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="12dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/subtitulo_home"
@@ -38,8 +37,6 @@
         app:layout_constraintTop_toBottomOf="@+id/searchInput"
 
         />
-    <!--    android:layout_width="130dp"-->
-    <!--    android:layout_height="35dp"-->
 
 
     <ImageView
@@ -58,9 +55,10 @@
     <EditText
         android:id="@+id/searchInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="25dp"
         android:autofillHints=""
         android:background="@drawable/custom_searchview_background"
         android:drawableStart="@drawable/search_icon"
@@ -71,8 +69,8 @@
         android:minHeight="48dp"
         android:padding="8dp"
         android:textColorHint="#757575"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnFavourite"
+        app:layout_constraintStart_toStartOf="@+id/lblTituloFavourite"
         app:layout_constraintTop_toBottomOf="@id/lblTituloFavourite" />
 
 
@@ -83,7 +81,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -135,20 +132,5 @@
         app:srcCompat="@drawable/logout"
         app:tint="@color/ligth_gray"
         tools:ignore="ImageContrastCheck,TouchTargetSizeCheck" />
-
-<!--    <Button-->
-<!--        android:id="@+id/btnLogout"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/custom_searchview_background"-->
-<!--        android:fontFamily="@font/poppins_regular"-->
-<!--        android:text="@string/btnLogout"-->
-<!--        android:textColor="#FAFAFA"-->
-<!--        android:visibility="visible"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        tools:ignore="TextContrastCheck"-->
-<!--        tools:visibility="visible" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

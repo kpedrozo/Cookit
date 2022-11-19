@@ -23,9 +23,11 @@
 
         android:autoSizeMinTextSize="24sp"
         android:autoSizeMaxTextSize="48sp"
-        android:autoSizeStepGranularity="2sp"
-        tools:targetApi="o"
         />
+<!--        android:textSize="24sp"-->
+<!--        tools:targetApi="o" -->
+<!--        android:autoSizeStepGranularity="2sp"-->
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipes"

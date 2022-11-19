@@ -31,7 +31,7 @@ class APIService {
         private val myDB = Firebase.firestore.collection("favoritos")
 
         fun getRecipes (context: Context, user: String) : ArrayList<Recipe>{
-            Log.d(TAG, "getRecipes: getRecipes email usuario: ${user}")
+//            Log.d(TAG, "getRecipes: getRecipes email usuario: ${user}")
             val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -68,7 +68,6 @@ class APIService {
             recetaFavorita: RecipeEntity,
             user: String
         ) {
-
             val room = RoomDataBase.getInstance(context).recipeDao().insertRecipe(recetaFavorita)
 
             val receta = hashMapOf(

@@ -34,17 +34,13 @@ class Home : AppCompatActivity() {
 
     private lateinit var rvRecipes : RecyclerView
     private var recipes = ArrayList<Recipe>()
-//    private var recetaDetail : RecipeDetailModel? = null
     private lateinit var adapter : RecipeAdapter
-//    private lateinit var adapterEntity : RecipeEntityAdapter
     private lateinit var btnFavourite : ImageButton
     private lateinit var tvUser : TextView
-//    private lateinit var searchView: SearchView
     private lateinit var searchInput: EditText
 
     // firebase auth
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-//    private lateinit var btnLogout : Button
     private lateinit var btnLogout : ImageButton
 
     // google logout
@@ -54,15 +50,12 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-//        val recycler = findViewById<RecyclerView>(R.id.rvRecipes)
-//        val adapter = RecipeAdapter(recipes, this)
         setContentView(R.layout.activity_home)
         supportActionBar?.hide()
         initRecyclerView()
         onClickDetails()
         agregarFavorito()
         eliminarFavorito()
-//        buscarRecetas()
 
         searchInput = findViewById(R.id.searchInput)
 
@@ -99,7 +92,7 @@ class Home : AppCompatActivity() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser == null) {
             // user not logged in
-            Log.d("Login", "Usuario no registrado")
+//            Log.d("Login", "Usuario no registrado")
             startActivity(Intent(this@Home, Login::class.java))
             finish()
         }
@@ -111,11 +104,8 @@ class Home : AppCompatActivity() {
             var user = firebaseUser.displayName
             user = splitName(user!!)
             // set email
-//            Log.d("Login", "checkUser: ${user}")
             tvUser = findViewById(R.id.tvUser)
             tvUser.text = user;
-//             set name
-
         }
     }
 
@@ -144,7 +134,6 @@ class Home : AppCompatActivity() {
         intent.putExtra("title", receta.title)
         intent.putExtra("img", receta.image)
         intent.putExtra("ingredients", receta.ingredients)
-//        intent.putExtra("instruccions", receta.summary)
         startActivity(intent)
     }
 
@@ -174,12 +163,9 @@ class Home : AppCompatActivity() {
         val user = firebaseAuth.currentUser!!.email
 
         scope.launch {
-//            Log.d("Favourite", "onStart email HOME: ${user}")
             val recipesRoom = RoomDataBase.getInstance(this@Home).recipeDao()
             recipesRoom.fetchAll(user!!)
-//            Log.d("Favourite", "onStart: ${recipesRoom}")
             val recipesMain = MainRepository.getRecipes(this@Home, user)
-//            Log.d("getrecetas OK", "llegamooos")
             recipes = verificarFavoritos(recipesRoom, recipesMain, user)
             withContext(Dispatchers.Main) {
                 adapter.update(recipes)
@@ -188,19 +174,15 @@ class Home : AppCompatActivity() {
 
         searchInput.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                btnLogout.visibility = View.INVISIBLE
-
             }
 
             override fun onTextChanged(search: CharSequence?, start: Int, before: Int, count: Int) {
-//                btnLogout.visibility = View.INVISIBLE
-
                 // uso las recetas que me traigo de la API por primera vez
-                updateRecipesQueryFromRoom(recipes, search)
+//                updateRecipesQueryFromRoom(recipes, search)
 
                 // hago una consulta a la API con lo que se busca -> Trae mas cantidad de recetas
-//                val recipesFound = MainRepository.getRecipesSearch(this@Home, user!!, search.toString())
-//                updateRecipesQuery(recipesFound)
+                val recipesFound = MainRepository.getRecipesSearch(this@Home, user!!, search.toString())
+                updateRecipesQuery(recipesFound)
             }
 
             private fun updateRecipesQueryFromRoom( recipesDB: ArrayList<Recipe>, search: CharSequence?) {
@@ -222,8 +204,6 @@ class Home : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-//                btnLogout.visibility = View.GONE
-
             }
         })
     }

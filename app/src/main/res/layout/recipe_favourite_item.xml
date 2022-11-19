@@ -6,28 +6,17 @@
     android:layout_height="wrap_content">
 
 
-
-    <!--    <ImageView-->
-    <!--        android:id="@+id/btnFavouriteRcp"-->
-    <!--        android:layout_width="51dp"-->
-    <!--        android:layout_height="43dp"-->
-    <!--        android:contentDescription="@string/imgrecipe"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.955"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintVertical_bias="0.108"-->
-    <!--        app:srcCompat="@drawable/ic_favorite_border" />-->
-
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgRecipe"
         android:layout_width="350dp"
         android:layout_height="150dp"
+
         android:layout_margin="5dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:adjustViewBounds="true"
         android:scaleType="fitCenter"
+
         android:src="@drawable/round_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,28 +28,25 @@
         android:id="@+id/btnGuardarFavorito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
         android:background="@color/red_favourite"
         android:contentDescription="@string/favourite"
         android:src="@drawable/ic_baseline_favorite_border_24"
         app:backgroundTint="@color/red_favourite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imgRecipe"
+        app:layout_constraintEnd_toEndOf="@+id/imgRecipe"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424"
+        app:layout_constraintVertical_bias="0.414"
         tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/txtRecipeTitle"
         android:layout_width="350dp"
         android:layout_height="38dp"
-        android:fontFamily="@font/poppins_regular"
         android:layout_marginTop="2dp"
+        android:fontFamily="@font/poppins_regular"
         android:text="@string/recipeTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imgRecipe"
+        app:layout_constraintStart_toStartOf="@+id/imgRecipe"
         app:layout_constraintTop_toBottomOf="@+id/imgRecipe" />
 
     <View
@@ -72,21 +58,5 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRecipeTitle" />
-
-    <!--    <Button-->
-    <!--        android:id="@+id/favBtn"-->
-    <!--        android:layout_width="48dp"-->
-    <!--        android:layout_height="48dp"-->
-    <!--        android:layout_marginStart="341dp"-->
-    <!--        android:layout_marginTop="135dp"-->
-    <!--        android:layout_marginEnd="40dp"-->
-    <!--        android:layout_marginBottom="30dp"-->
-    <!--        android:background="@drawable/ic_favorite_red_24"-->
-    <!--        android:contentDescription="@string/btnFavoritos"-->
-    <!--        android:gravity="bottom|end"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
