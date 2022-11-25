@@ -1,8 +1,8 @@
 package com.example.cookit.data
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
+import androidx.room.TypeConverter
 import com.example.cookit.models.Recipe
 import com.example.cookit.models.RecipeDetailModel
 import com.example.cookit.models.RecipeEntity
@@ -13,14 +13,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.newSingleThreadContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
+import kotlin.collections.ArrayList
+
 import kotlin.coroutines.CoroutineContext
 
 class APIService {
     companion object {
 
-        private val coroutineContext : CoroutineContext = newSingleThreadContext("room")
-        private val  scope = CoroutineScope(coroutineContext)
+        private val coroutineContext: CoroutineContext = newSingleThreadContext("room")
+        private val scope = CoroutineScope(coroutineContext)
 
         val BASE_URL = "https://api.spoonacular.com/"
         val apiKey = "502e29b08c5b48ee9b92ebd598c8ee8b"
@@ -30,7 +34,7 @@ class APIService {
 
         private val myDB = Firebase.firestore.collection("favoritos")
 
-        fun getRecipes (context: Context, user: String) : ArrayList<Recipe>{
+        fun getRecipes(context: Context, user: String): ArrayList<Recipe> {
 //            Log.d(TAG, "getRecipes: getRecipes email usuario: ${user}")
             val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -47,7 +51,7 @@ class APIService {
             }
         }
 
-        fun getRecipesSearch (context: Context, user: String, query : String) : ArrayList<Recipe> {
+        fun getRecipesSearch(context: Context, user: String, query: String): ArrayList<Recipe> {
             val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -63,7 +67,7 @@ class APIService {
             }
         }
 
-        suspend fun insertRecipeFavourite (
+        suspend fun insertRecipeFavourite(
             context: Context,
             recetaFavorita: RecipeEntity,
             user: String
@@ -72,7 +76,8 @@ class APIService {
 
             val receta = hashMapOf(
                 "title" to recetaFavorita.title,
-                "image" to recetaFavorita.img
+                "image" to recetaFavorita.img,
+                "ttl" to recetaFavorita.ttl
             )
             myDB
                 .document(user).collection("recetas")
@@ -82,23 +87,27 @@ class APIService {
                     Log.d(TAG, "insertRecipeFavourite: receta favorita guardada en Firestore")
                 }
                 .addOnFailureListener { e ->
-                    Log.d(TAG, "insertRecipeFavourite: Error: Receta favorita sin guardar en Firestore", e)
+                    Log.d(
+                        TAG,
+                        "insertRecipeFavourite: Error: Receta favorita sin guardar en Firestore",
+                        e
+                    )
                 }
             return room;
         }
 
-        suspend fun getRecipebyID (context: Context, id : Int) : RecipeDetailModel {
+        suspend fun getRecipebyID(context: Context, id: Int): RecipeDetailModel {
             val retrofit = Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
             val apiEndpoint = retrofit.create(RecipesAPI::class.java)
-            val result = apiEndpoint.getRecipebyID(id , apiKey).execute()
+            val result = apiEndpoint.getRecipebyID(id, apiKey).execute()
 
             return if (result.isSuccessful) {
                 result.body()!!
             } else {
-                val response = RecipeDetailModel(0,"","", ArrayList(),"")
+                val response = RecipeDetailModel(0, "", "", ArrayList(), "")
                 return response
             }
         }
@@ -106,19 +115,38 @@ class APIService {
         suspend fun getRecipesFavourite(context: Context, user: String): MutableList<RecipeEntity> {
 
             val recetasRoom = RoomDataBase.getInstance(context).recipeDao().fetchAll(user);
-            if (recetasRoom.size == 0){
+
+            val date = Date()
+            val ldt = LocalDateTime.ofInstant(date.toInstant(), ZoneId.of("-3")).toString()
+
+            // Si no hay recetas en Room, o el TTL de la receta es menor a ESTE MOMENTO
+            if ( recetasRoom.size == 0 || recetasRoom.first().ttl < ldt ) {
                 myDB.document(user).collection("recetas").get()
-                    .addOnSuccessListener { documents ->
+                    .addOnSuccessListener {
+                            documents ->
+                        Log.d(TAG, "getRecipesFavourite: Recetas FAV desde Firebase traidas")
                         for (document in documents) {
                             val id = document.id
                             val title = document.data["title"]
                             val img = document.data["image"]
                             scope.launch {
-                            RoomDataBase.getInstance(context).recipeDao().insertRecipe(RecipeEntity(
-                                Integer.parseInt(id), user, title as String, img as String, true
-                            ))}
-                    }
+                                RoomDataBase.getInstance(context).recipeDao().insertRecipe(
+                                    RecipeEntity(
+                                        Integer.parseInt(id),
+                                        user,
+                                        title as String,
+                                        img as String,
+                                        true,
+                                        ldt
+                                        ))}}
                 }
+                    .addOnFailureListener { e ->
+                        Log.d(
+                            TAG,
+                            "getRecipesFavourite: Error no se pudieron traer recetas FAV de Firebase"
+                        )
+                    }
+
             }
             return RoomDataBase.getInstance(context).recipeDao().fetchAll(user);
         }
@@ -133,7 +161,11 @@ class APIService {
                     Log.d(TAG, "insertRecipeFavourite: receta favorita ELIMINADA de Firestore")
                 }
                 .addOnFailureListener { e ->
-                    Log.d(TAG, "insertRecipeFavourite: Error: Receta favorita sin borrar de Firestore", e)
+                    Log.d(
+                        TAG,
+                        "insertRecipeFavourite: Error: Receta favorita sin borrar de Firestore",
+                        e
+                    )
                 }
             return room;
         }
@@ -143,10 +175,17 @@ class APIService {
             myDB.document("$id")
                 .get()
                 .addOnSuccessListener {
-                    Log.d(TAG, "selectRecipeFavouriteByID: get receta favorita by ID desde Firestore")
+                    Log.d(
+                        TAG,
+                        "selectRecipeFavouriteByID: get receta favorita by ID desde Firestore"
+                    )
                 }
                 .addOnFailureListener { e ->
-                    Log.d(TAG, "selectRecipeFavouriteByID: error al buscar receta por id en Firestore", e)
+                    Log.d(
+                        TAG,
+                        "selectRecipeFavouriteByID: error al buscar receta por id en Firestore",
+                        e
+                    )
                 }
             return room;
         }

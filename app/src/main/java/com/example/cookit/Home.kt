@@ -23,6 +23,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.*
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.coroutines.CoroutineContext
 
 
@@ -139,11 +143,14 @@ class Home : AppCompatActivity() {
 
     private fun agregarFavorito() {
         val user = firebaseAuth.currentUser!!.email
+        // Establezco el tiempo de vida de la instancia de Room valido hasta 10 minutos a partir de este momento
+        val date = Date()
+        val ttl = LocalDateTime.ofInstant(date.toInstant(), ZoneId.of("-3")).plusMinutes(10).toString()
         Log.d("Favourite", "agregarFavorito: email HOME agregarFavorito ${user}")
         adapter.onItemFavouriteClick = { recipe : Recipe ->
             scope.launch {
                 MainRepository.insertRecipeFavourite(this@Home, RecipeEntity(recipe.id,
-                    user!!, recipe.title, recipe.image, true), user)
+                    user!!, recipe.title, recipe.image, true, ttl), user)
             }
         }
     }

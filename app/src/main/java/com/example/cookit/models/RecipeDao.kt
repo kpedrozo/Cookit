@@ -20,4 +20,7 @@ interface RecipeDao {
     @Query("SELECT * FROM recipes WHERE id = :id")
     suspend fun selectByID(id : Int) : RecipeEntity
 
+    @Query("SELECT ttl FROM recipes ORDER BY ttl ASC LIMIT 1")
+    suspend fun getLastTTL() : String
+
 }

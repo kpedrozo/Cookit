@@ -97,10 +97,8 @@
         android:background="@color/white"
         android:contentDescription="@string/favourite"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/rvRecipes"
         app:layout_constraintStart_toEndOf="@+id/lblTituloFavourite"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.102"
         app:srcCompat="@drawable/favourite"
         tools:ignore="ImageContrastCheck" />
 
