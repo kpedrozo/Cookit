@@ -155,3 +155,8 @@ Resultado = {
 https://www.figma.com/file/LCUCwOwbUtWsn9Nma4eiTo/Cookit?node-id=1%3A961&t=6a8uN8OlLnskdJ4f-0
 
 ![image](https://user-images.githubusercontent.com/69213023/201830039-143a1984-d849-4595-9927-fb8c26a41635.png)
+
+### App funcionando 🙂
+
+![app Cookit](https://user-images.githubusercontent.com/69213023/204058750-69d58dd5-cc45-4eaf-be55-90dbef922b3e.jpg)
+
